@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MVCProject_IvanaKasalo.Models.Grad>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @Html.HiddenFor(modelItem => item.IDGrad)
+        <tr>          
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { @id = item.IDGrad }, new { @class = "btn btn-info" })
+
+                @Html.ActionLink("Kupci", "Index", "Kupac", new { @id = item.IDGrad }, new { @class = "btn btn-info" })
+                @Html.ActionLink("Delete", "Delete", new { @id = item.IDGrad }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
+
+</table>

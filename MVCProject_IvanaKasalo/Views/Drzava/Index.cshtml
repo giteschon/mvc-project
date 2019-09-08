@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MVCProject_IvanaKasalo.Models.Drzava>
+
+@{
+    ViewBag.Title = "Države";
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function (e) {
+            $("#gradovi_ajax").click(function (evt) {
+
+               
+                var drzavaID = $('#MyHiddenId').val();
+                console.log(drzavaID)
+               // drzavaID = 1;
+                var link = '@(Url.Action("Ajax", "Grad", new {id="id" }, Request.Url.Scheme))';
+                link = link.replace("id", drzavaID);
+
+                @*$('#gradovi_container').load('@(Url.Action("Ajax", "Grad", new {id="drzavaID" }, Request.Url.Scheme))'));*@
+                   $('#gradovi_container').load(link);
+               
+            });
+        
+        });
+
+    </script>
+
+}
+
+
+<h2>Index</h2>
+
+<div class="row">
+    <div class="col-lg-6 col-md-4 col-sm-12">
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table table-striped">
+          
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Naziv)
+                    </th>
+                    <th></th>
+                </tr>
+                
+
+                @foreach (var item in Model)
+                {
+                    @Html.HiddenFor(modelItem => item.IDDrzava, new { id = "MyHiddenId", value = item.IDDrzava })
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Naziv)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { @id = item.IDDrzava }, new { @class = "btn btn-info" })
+
+
+                            @*@Html.ActionLink("Gradovi", "Index", "Grad", new { @id = item.IDDrzava }, null)*@
+
+                            <input type="button" id="gradovi_ajax"
+                                   value="Gradovi" class="btn btn-info" />
+                            @Html.ActionLink("Delete", "Delete", new { @id = item.IDDrzava }, new { @class = "btn btn-primary" })
+
+                        </td>
+                    </tr>
+                }
+
+        </table>
+    </div>
+
+    <div id="gradovi_container" class="col-lg-6 col-md-4 col-sm-12">
+        Ajax placeholder
+    </div>
+</div>
+
